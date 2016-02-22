@@ -1,1 +1,1 @@
-# Laravel-SeoMeta
+# Laravel-Seo Meta

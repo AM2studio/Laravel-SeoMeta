@@ -1,0 +1,31 @@
+{
+    "name": "am2studio/laravel-seo-meta",
+    "type": "library",
+    "description": "Laravel seo meta",
+    "keywords": [
+        "AM2Studio",
+        "Laravel seo meta"
+    ],
+    "homepage": "https://github.com/AM2studio/Laravel-SeoMeta",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Filip Horvat",
+            "email": "filip.horvat@am2studio.hr",
+            "homepage": "http://am2studio.hr",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : ">=5.4.0",
+        "laravel/framework": "5.2.*"
+    },
+    "require-dev": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "AM2Studio\\Laravel\\SeoMeta\\": "src/AM2Studio/Laravel/SeoMeta/"
+        }
+    }
+}
