@@ -24,6 +24,10 @@ trait SeoMetaTrait
         $this->seoMetaFromForm = $this->seoMeta;
         unset($this->seoMeta);
     }
+	
+	public getSeoMeta(){
+		return $this->seoMetas->lists('value', 'key')->toArray();
+	}
 
     private function generateSeoMeta($type = 'create')
     {
