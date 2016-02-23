@@ -25,7 +25,7 @@ trait SeoMetaTrait
         unset($this->seoMeta);
     }
 	
-	public getSeoMeta(){
+	public function getSeoMeta(){
 		return $this->seoMetas->lists('value', 'key')->toArray();
 	}
 
