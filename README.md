@@ -34,9 +34,10 @@ seoMetas() is "hasMany" relation to seoMetas of model
 public function seoMetasConfig()
 {
 	return [
-		'title'         => ['generator' => 'green-rush.com - '. $this->title],
+		'title'         => ['generator' => 'example.com - '. $this->title],
 		'description'   => ['generator' => 'green-rush.com - '. $this->title . ' - ' . $this->short_description,],
-		'keywords'      => ['generator' => 'greenrush, dispensary, ' . $this->title . ', ' . $this->short_description, 'edit'=> false],
+		'keywords'      => ['generator' => 'greenrush, dispensary, ' . $this->title . ', ' . $this->short_description,
+		'edit'=> false],
 		'og:image'      => ['generator' => ["http://i.stack.imgur.com/hEobN.jpg", "http://i.stack.imgur.com/hEobN2.jpg"]],
 		'twitter:site'  => [],
 	];
