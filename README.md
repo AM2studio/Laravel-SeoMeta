@@ -12,6 +12,20 @@ $ composer require am2studio/laravel-seo-meta
 
 ## Usage
 
+First run migration for this package (src/migration/):
+
+```php
+Schema::create('seo_metas', function (Blueprint $table) {
+	$table->increments('id');
+	$table->string('model_type');
+	$table->integer('model_id')->unsigned();
+	$table->text('key');
+	$table->text('value');
+
+	$table->timestamps();
+});
+```
+
 For each model which that use seo meta add trait "SeoMetaTrait" and implement interface "SeoMetaInterface"
 
 ```php
