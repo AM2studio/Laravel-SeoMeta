@@ -110,7 +110,7 @@ Set data in controller:
 public function __construct()
     {
         parent::__construct();
-        SeoMetaHelper::setSeoMeta(['title' => 'Default description __construct .']);
+        SeoMetaHelper::setSeoMeta(['title' => 'Default title __construct .']);
     }
 
     public function index()
@@ -124,6 +124,7 @@ public function __construct()
         SeoMetaHelper::setSeoMeta($product->getSeoMeta());
 		
 		return $this->view('show', compact('product'));
+	}
 ```
 
 Show meta in view :
