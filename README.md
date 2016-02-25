@@ -50,7 +50,7 @@ public function seoMetasConfig()
 	return [
 		'title'         => ['generator' => 'example.com - '. $this->title],
 		'description'   => ['generator' => 'green-rush.com - '. $this->title . ' - ' . $this->short_description,],
-		'keywords'      => ['generator' => 'greenrush, dispensary, ' . $this->title . ', ' . $this->short_description,
+		'keywords'      => ['generator' => 'greenrush, product, ' . $this->title . ', ' . $this->short_description,
 		'edit'=> false],
 		'og:image'      => ['generator' => ["http://i.stack.imgur.com/hEobN.jpg", "http://i.stack.imgur.com/hEobN2.jpg"]],
 		'twitter:site'  => [],
@@ -100,8 +100,42 @@ protected $fillable = [
 Show form for meta seo deta on model:
 
 ```php
-{!! \AM2Studio\Laravel\SeoMeta\SeoMetaHelper::form($dispensary) !!}
+{!! \AM2Studio\Laravel\SeoMeta\SeoMetaHelper::form($product) !!}
 ```
+
+Set data in controller:
+
+```php
+
+public function __construct()
+    {
+        parent::__construct();
+        SeoMetaHelper::setSeoMeta(['title' => 'Default description __construct .']);
+    }
+
+    public function index()
+    {
+		SeoMetaHelper::setSeoMeta(['description' => 'Default description index .']);
+        return $this->view('index');
+    }
+	
+	public function show($product)
+    {
+        SeoMetaHelper::setSeoMeta($product->getSeoMeta());
+		
+		return $this->view('show', compact('product'));
+```
+
+Show meta in view :
+```php
+{{
+    \AM2Studio\Laravel\SeoMeta\SeoMetaHelper::render([
+        //alternative data if is not set anywhere
+        'keywords' => 'example.com -> frontend layout'
+    ])
+}}
+```
+
 
 ## Change log
 
