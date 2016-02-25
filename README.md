@@ -88,7 +88,7 @@ twitter:site				-> string
 ```
 For each seo meta in config you define generator(how seo meta will be generated) and edit (if seo meta can be edited or will be always generated on model save, default - true)
 
-Finaly add "saeMeta" to Model -> fillable
+Finaly add "seoMeta" to Model -> fillable
 ```php
 protected $fillable = [
 	...
