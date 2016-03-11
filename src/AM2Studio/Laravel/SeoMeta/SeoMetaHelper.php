@@ -68,11 +68,9 @@ class SeoMetaHelper
         echo $string;
     }
 
-    public static function form($model)
+	public static function formData($model)
     {
-        $string = "";
-
-        $seoMetasConfig = $model->seoMetasConfig();
+		$seoMetasConfig = $model->seoMetasConfig();
         $seoMetas       = $model->seoMetas()->lists('value', 'key');
 
         foreach ($seoMetasConfig as $key => $seoMetaConfig) {
@@ -85,23 +83,36 @@ class SeoMetaHelper
                 $seoMetas[$key] = $generator;
             }
         }
+		
+		$formData = [];
+		foreach ($seoMetasConfig as $key => $seoMetaConfig) {
+			$name   = 'seoMeta[' . $key . ']';
+            $value  = $seoMetas[$key];
+			$type   = (self::$seoMetaTypes[$key]['type'] == 'string') ? 'text' : 'textarea';
+            $edit   = (isset($seoMetaConfig['edit'])) ? $seoMetaConfig['edit'] : true;
+			$config = ( ! $edit) ? ['disabled' => 'disabled'] : [];
+			
+			$formData[$key] = ['name' => $name, 'value' => $value, 'type' => $type, 'edit' => $edit, 'config' => $config];
+        }
 
-        foreach ($seoMetasConfig as $key => $seoMetaConfig) {
-            $type = self::$seoMetaTypes[$key]['type'];
-            $edit = (isset($seoMetaConfig['edit'])) ? $seoMetaConfig['edit'] : true;
+		return $formData;
+	}
 
-            $config          = [];
-            $config['class'] = 'form-control';
-            $config += (! $edit) ? ['disabled' => 'disabled'] : [];
+    public static function form($model)
+    {
+		$formData = self::formData($model);
+        $string = "";
 
-            $string .= '<div class="form-group">';
-            $string .= Form::label($key, $key, ['class' => 'control-label']);
-            if ($type == 'string') {
-                $string .= Form::text('seoMeta[' . $key . ']', $seoMetas[$key], $config);
-            } else {
-                $string .= Form::textarea('seoMeta[' . $key . ']', $seoMetas[$key], $config);
-            }
-            $string .= '</div>';
+        $seoMetasConfig = $model->seoMetasConfig();
+        $seoMetas       = $model->seoMetas()->lists('value', 'key');
+
+        foreach ($formData as $key => $value) {
+			$type = $value['type'];
+			
+			$string .= '<div class="form-group">';
+            $string .= Form::label($value['name'], $key, ['class' => 'control-label']);
+            $string .= Form::$type($value['name'], $value['value'], ($value['config'] + ['class' => 'form-control']));
+			$string .= '</div>';
         }
 
         return $string;
