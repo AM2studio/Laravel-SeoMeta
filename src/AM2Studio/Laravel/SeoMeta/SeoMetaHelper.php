@@ -12,7 +12,7 @@ class SeoMetaHelper
         'title'                  => ['type' => 'string', 'template' => '<title>%s</title>'],
         'description'            => ['type' => 'string', 'template' => '<meta name="description" itemprop="description" content="%s" />'],
         'keywords'               => ['type' => 'string', 'template' => '<meta name="keywords" content="%s" />'],
-		'canonical'        		 => ['type' => 'string', 'template' => '<link rel="canonical" href="%s" />'],
+        'canonical'                 => ['type' => 'string', 'template' => '<link rel="canonical" href="%s" />'],
         'article:published_time' => ['type' => 'string', 'template' => '<meta property="article:published_time" content="%s" />'],
         'article:section'        => ['type' => 'string', 'template' => '<meta property="article:section" content="%s" />'],
 
@@ -68,9 +68,9 @@ class SeoMetaHelper
         echo $string;
     }
 
-	public static function formData($model)
+    public static function formData($model)
     {
-		$seoMetasConfig = $model->seoMetasConfig();
+        $seoMetasConfig = $model->seoMetasConfig();
         $seoMetas       = $model->seoMetas()->lists('value', 'key');
 
         foreach ($seoMetasConfig as $key => $seoMetaConfig) {
@@ -83,36 +83,37 @@ class SeoMetaHelper
                 $seoMetas[$key] = $generator;
             }
         }
-		
-		$formData = [];
-		foreach ($seoMetasConfig as $key => $seoMetaConfig) {
-			$name   = 'seoMeta[' . $key . ']';
+
+        $formData = [];
+        foreach ($seoMetasConfig as $key => $seoMetaConfig) {
+            $name   = 'seoMeta[' . $key . ']';
             $value  = $seoMetas[$key];
-			$type   = (self::$seoMetaTypes[$key]['type'] == 'string') ? 'text' : 'textarea';
+            $type   = (self::$seoMetaTypes[$key]['type'] == 'string') ? 'text' : 'textarea';
             $edit   = (isset($seoMetaConfig['edit'])) ? $seoMetaConfig['edit'] : true;
-			$config = ( ! $edit) ? ['disabled' => 'disabled'] : [];
-			
-			$formData[$key] = ['name' => $name, 'value' => $value, 'type' => $type, 'edit' => $edit, 'config' => $config];
+            $config = ( ! $edit) ? ['disabled' => 'disabled'] : [];
+            $label  = isset($seoMetaConfig['label']) ? $seoMetaConfig['label'] : ucwords($key);
+
+            $formData[$key] = ['label' => $label, 'name' => $name, 'value' => $value, 'type' => $type, 'edit' => $edit, 'config' => $config];
         }
 
-		return $formData;
-	}
+        return $formData;
+    }
 
     public static function form($model)
     {
-		$formData = self::formData($model);
+        $formData = self::formData($model);
         $string = "";
 
         $seoMetasConfig = $model->seoMetasConfig();
         $seoMetas       = $model->seoMetas()->lists('value', 'key');
 
         foreach ($formData as $key => $value) {
-			$type = $value['type'];
-			
-			$string .= '<div class="form-group">';
+            $type = $value['type'];
+
+            $string .= '<div class="form-group">';
             $string .= Form::label($value['name'], $key, ['class' => 'control-label']);
             $string .= Form::$type($value['name'], $value['value'], ($value['config'] + ['class' => 'form-control']));
-			$string .= '</div>';
+            $string .= '</div>';
         }
 
         return $string;
