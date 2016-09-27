@@ -3,18 +3,12 @@
 namespace AM2Studio\Laravel\SeoMeta;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\Dispensary;
-use App\Models\BaseModel;
 
 /**
- * Class SeoMetaServiceProvider
- *
- * @package AM2Studio\Laravel\SeoMeta
+ * Class SeoMetaServiceProvider.
  */
 class SeoMetaServiceProvider extends ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -24,18 +18,13 @@ class SeoMetaServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
-        //
     }
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -43,9 +32,7 @@ class SeoMetaServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the listener events
-     *
-     * @return void
+     * Register the listener events.
      */
     public function registerEvents()
     {

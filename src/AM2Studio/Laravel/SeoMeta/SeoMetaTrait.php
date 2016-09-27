@@ -2,11 +2,8 @@
 
 namespace AM2Studio\Laravel\SeoMeta;
 
-use Illuminate\Database\Eloquent\Model;
-
 trait SeoMetaTrait
 {
-
     private $seoMetaFromForm = [];
 
     public function seoMetaModelCreated()
@@ -24,15 +21,25 @@ trait SeoMetaTrait
         $this->seoMetaFromForm = $this->seoMeta;
         unset($this->seoMeta);
     }
-	
-	public function getSeoMeta(){
-		return $this->seoMetas->lists('value', 'key')->toArray();
-	}
+
+    public function getSeoMeta()
+    {
+        $showSeoMetas = [];
+        $seoMetasConfig = $this->seoMetasConfig();
+        $seoMetas = $this->seoMetas->lists('value', 'key')->toArray();
+        foreach ($seoMetas as $k => $v) {
+            if (isset($seoMetasConfig[$k])) {
+                $showSeoMetas[$k] = $v;
+            }
+        }
+
+        return $showSeoMetas;
+    }
 
     private function generateSeoMeta($type = 'create')
     {
         $seoMetasConfig = $this->seoMetasConfig();
-        $seoMetas       = $this->seoMetas;
+        $seoMetas = $this->seoMetas;
 
         foreach ($seoMetasConfig as $key => $seoMetaConfig) {
             $existsInDbId = false;
@@ -41,12 +48,12 @@ trait SeoMetaTrait
                     $existsInDbId = $seoMeta->id;
                 }
             }
-            $content = (isset($seoMetaConfig['generator'])) ? $seoMetaConfig['generator'] : "";
+            $content = (isset($seoMetaConfig['generator'])) ? $seoMetaConfig['generator'] : '';
             if (is_array($content)) {
                 $content = implode("\n", $content);
             }
-            $edit      = (isset($seoMetaConfig['edit'])) ? $seoMetaConfig['edit'] : true;
-            if ($type == 'update'  &&  $edit == true) {
+            $edit = (isset($seoMetaConfig['edit'])) ? $seoMetaConfig['edit'] : true;
+            if ($type == 'update' && $edit == true) {
                 if (isset($this->seoMetaFromForm[$key])) {
                     $content = $this->seoMetaFromForm[$key];
                 }

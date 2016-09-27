@@ -9,27 +9,27 @@ class SeoMetaHelper
     protected static $seoMeta = [];
 
     public static $seoMetaTypes = [
-        'title'                  => ['type' => 'string', 'template' => '<title>%s</title>'],
-        'description'            => ['type' => 'string', 'template' => '<meta name="description" itemprop="description" content="%s" />'],
-        'keywords'               => ['type' => 'string', 'template' => '<meta name="keywords" content="%s" />'],
-        'canonical'                 => ['type' => 'string', 'template' => '<link rel="canonical" href="%s" />'],
+        'title' => ['type' => 'string', 'template' => '<title>%s</title>'],
+        'description' => ['type' => 'string', 'template' => '<meta name="description" itemprop="description" content="%s" />'],
+        'keywords' => ['type' => 'string', 'template' => '<meta name="keywords" content="%s" />'],
+        'canonical' => ['type' => 'string', 'template' => '<link rel="canonical" href="%s" />'],
         'article:published_time' => ['type' => 'string', 'template' => '<meta property="article:published_time" content="%s" />'],
-        'article:section'        => ['type' => 'string', 'template' => '<meta property="article:section" content="%s" />'],
+        'article:section' => ['type' => 'string', 'template' => '<meta property="article:section" content="%s" />'],
 
-        'og:description'         => ['type' => 'string', 'template' => '<meta property="og:description" content="%s" />'],
-        'og:title'               => ['type' => 'string', 'template' => '<meta property="og:title" content="%s" />'],
-        'og:url'                 => ['type' => 'string', 'template' => '<meta property="og:url" content="h%s" />'],
-        'og:type'                => ['type' => 'string', 'template' => '<meta property="og:type" content="%s" />'],
-        'og:locale'              => ['type' => 'string', 'template' => '<meta property="og:locale" content="%s" />'],
-        'og:locale:alternate'    => ['type' => 'array',  'template' => '<meta property="og:locale:alternate" content="%s" />'],
-        'og:site_name'           => ['type' => 'string', 'template' => '<meta property="og:site_name" content="%s" />'],
-        'og:image'               => ['type' => 'array',  'template' => '<meta property="og:image" content="%s" />'],
-        'og:image:url'           => ['type' => 'array',  'template' => '<meta property="og:image:url" content="%s" />'],
-        'og:image:size'          => ['type' => 'string', 'template' => '<meta property="og:image:size" content="%s" />'],
+        'og:description' => ['type' => 'string', 'template' => '<meta property="og:description" content="%s" />'],
+        'og:title' => ['type' => 'string', 'template' => '<meta property="og:title" content="%s" />'],
+        'og:url' => ['type' => 'string', 'template' => '<meta property="og:url" content="h%s" />'],
+        'og:type' => ['type' => 'string', 'template' => '<meta property="og:type" content="%s" />'],
+        'og:locale' => ['type' => 'string', 'template' => '<meta property="og:locale" content="%s" />'],
+        'og:locale:alternate' => ['type' => 'array',  'template' => '<meta property="og:locale:alternate" content="%s" />'],
+        'og:site_name' => ['type' => 'string', 'template' => '<meta property="og:site_name" content="%s" />'],
+        'og:image' => ['type' => 'array',  'template' => '<meta property="og:image" content="%s" />'],
+        'og:image:url' => ['type' => 'array',  'template' => '<meta property="og:image:url" content="%s" />'],
+        'og:image:size' => ['type' => 'string', 'template' => '<meta property="og:image:size" content="%s" />'],
 
-        'twitter:card'           => ['type' => 'string', 'template' => '<meta name="twitter:card" content="%s" />'],
-        'twitter:title'          => ['type' => 'string', 'template' => '<meta name="twitter:title" content="%s" />'],
-        'twitter:site'           => ['type' => 'string', 'template' => '<meta name="twitter:site" content="%s" />'],
+        'twitter:card' => ['type' => 'string', 'template' => '<meta name="twitter:card" content="%s" />'],
+        'twitter:title' => ['type' => 'string', 'template' => '<meta name="twitter:title" content="%s" />'],
+        'twitter:site' => ['type' => 'string', 'template' => '<meta name="twitter:site" content="%s" />'],
     ];
 
     public static function setSeoMeta($seoMeta)
@@ -45,22 +45,22 @@ class SeoMetaHelper
     {
         $seoMeta = self::$seoMeta;
         foreach ($default as $key => $value) {
-            if (! isset($seoMeta[$key])) {
+            if (!isset($seoMeta[$key])) {
                 $seoMeta[$key] = $default[$key];
             }
         }
 
-        $string = "";
+        $string = '';
         foreach ($seoMeta as $key => $value) {
             if (self::$seoMetaTypes[$key]['type'] == 'string') {
                 if ($seoMeta[$key] != '') {
-                    $string .= sprintf(self::$seoMetaTypes[$key]['template'], $seoMeta[$key]) . "\n";
+                    $string .= sprintf(self::$seoMetaTypes[$key]['template'], $seoMeta[$key])."\n";
                 }
             } else {
                 $seoMeta[$key] = explode("\n", self::$seoMeta[$key]);
                 foreach ($seoMeta[$key] as $row) {
                     if ($row != '') {
-                        $string .= sprintf(self::$seoMetaTypes[$key]['template'], $row) . "\n";
+                        $string .= sprintf(self::$seoMetaTypes[$key]['template'], $row)."\n";
                     }
                 }
             }
@@ -71,7 +71,7 @@ class SeoMetaHelper
     public static function formData($model)
     {
         $seoMetasConfig = $model->seoMetasConfig();
-        $seoMetas       = $model->seoMetas()->lists('value', 'key');
+        $seoMetas = $model->seoMetas()->lists('value', 'key');
 
         foreach ($seoMetasConfig as $key => $seoMetaConfig) {
             $generator = (isset($seoMetaConfig['generator'])) ? $seoMetaConfig['generator'] : '';
@@ -79,19 +79,19 @@ class SeoMetaHelper
                 $generator = implode("\n", $generator);
             }
 
-            if (! isset($seoMetas[$key])) {
+            if (!isset($seoMetas[$key])) {
                 $seoMetas[$key] = $generator;
             }
         }
 
         $formData = [];
         foreach ($seoMetasConfig as $key => $seoMetaConfig) {
-            $name   = 'seoMeta[' . $key . ']';
-            $value  = $seoMetas[$key];
-            $type   = (self::$seoMetaTypes[$key]['type'] == 'string') ? 'text' : 'textarea';
-            $edit   = (isset($seoMetaConfig['edit'])) ? $seoMetaConfig['edit'] : true;
-            $config = ( ! $edit) ? ['disabled' => 'disabled'] : [];
-            $label  = isset($seoMetaConfig['label']) ? $seoMetaConfig['label'] : ucwords($key);
+            $name = 'seoMeta['.$key.']';
+            $value = $seoMetas[$key];
+            $type = (self::$seoMetaTypes[$key]['type'] == 'string') ? 'text' : 'textarea';
+            $edit = (isset($seoMetaConfig['edit'])) ? $seoMetaConfig['edit'] : true;
+            $config = (!$edit) ? ['disabled' => 'disabled'] : [];
+            $label = isset($seoMetaConfig['label']) ? $seoMetaConfig['label'] : ucwords($key);
 
             $formData[$key] = ['label' => $label, 'name' => $name, 'value' => $value, 'type' => $type, 'edit' => $edit, 'config' => $config];
         }
@@ -102,10 +102,10 @@ class SeoMetaHelper
     public static function form($model)
     {
         $formData = self::formData($model);
-        $string = "";
+        $string = '';
 
         $seoMetasConfig = $model->seoMetasConfig();
-        $seoMetas       = $model->seoMetas()->lists('value', 'key');
+        $seoMetas = $model->seoMetas()->lists('value', 'key');
 
         foreach ($formData as $key => $value) {
             $type = $value['type'];

@@ -13,7 +13,7 @@ class SeoMeta extends Model
 
     public function getTitle()
     {
-        return '"' . $this->key . '"=' . $this->value . ' for model ' . $this->model_type . '(' . $model_id. ')';
+        return '"'.$this->key.'"='.$this->value.' for model '.$this->model_type.'('.$model_id.')';
     }
 
     /*
