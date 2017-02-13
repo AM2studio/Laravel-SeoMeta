@@ -18,7 +18,7 @@ class SeoMetaHelper
 
         'og:description' => ['type' => 'string', 'template' => '<meta property="og:description" content="%s" />'],
         'og:title' => ['type' => 'string', 'template' => '<meta property="og:title" content="%s" />'],
-        'og:url' => ['type' => 'string', 'template' => '<meta property="og:url" content="h%s" />'],
+        'og:url' => ['type' => 'string', 'template' => '<meta property="og:url" content="%s" />'],
         'og:type' => ['type' => 'string', 'template' => '<meta property="og:type" content="%s" />'],
         'og:locale' => ['type' => 'string', 'template' => '<meta property="og:locale" content="%s" />'],
         'og:locale:alternate' => ['type' => 'array',  'template' => '<meta property="og:locale:alternate" content="%s" />'],
