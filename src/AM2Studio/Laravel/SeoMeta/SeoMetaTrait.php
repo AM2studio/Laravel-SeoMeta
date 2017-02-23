@@ -6,6 +6,11 @@ trait SeoMetaTrait
 {
     private $seoMetaFromForm = [];
 
+    public function seoMetas()
+    {
+        return $this->hasMany(SeoMeta::class, 'model_id')->where(['model_type' => __CLASS__]);
+    }
+
     public function seoMetaModelCreated()
     {
         $this->generateSeoMeta('create');
@@ -39,7 +44,7 @@ trait SeoMetaTrait
     private function generateSeoMeta($type = 'create')
     {
         $seoMetasConfig = $this->seoMetasConfig();
-        $seoMetas = $this->seoMetas;
+        $seoMetas       = $this->seoMetas;
 
         foreach ($seoMetasConfig as $key => $seoMetaConfig) {
             $existsInDbId = false;
