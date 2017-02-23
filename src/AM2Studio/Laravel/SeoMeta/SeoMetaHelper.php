@@ -32,11 +32,20 @@ class SeoMetaHelper
         'twitter:site' => ['type' => 'string', 'template' => '<meta name="twitter:site" content="%s" />'],
     ];
 
-    public static function setSeoMeta($seoMeta)
+    public static function setSeoMeta($seoMeta, $model = null)
     {
         if (is_array($seoMeta)) {
             foreach ($seoMeta as $key => $value) {
                 self::$seoMeta[$key] = $value;
+            }
+        }
+
+        if($model !== null){
+            $modelMetas = $model->getSeoMeta();
+            foreach ($modelMetas as $key => $value) {
+                if(trim($value) != ''){
+                    self::$seoMeta[$key] = $value;
+                }
             }
         }
     }
