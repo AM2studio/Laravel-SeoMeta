@@ -50,17 +50,19 @@ trait SeoMetaTrait
                 $seoMeta = $this->seoMetas()->where(['key' => $key])->first();
                 $content = $this->seoMetaFromForm[$key];
                 
-                if($content == ''){
-                    continue;
-                }
-                
                 if ( ! $seoMeta) {
+                    if($content == ''){
+                        continue;
+                    }
                     SeoMeta::create(['model_id' => $this->id, 'model_type' => __CLASS__, 'key' => $key, 'value' => $content]);
                 } else {
-                    $seoMeta->update(['value' => $content]);
+                    if($content == ''){
+                        $seoMeta->delete();
+                    }else{
+                        $seoMeta->update(['value' => $content]);
+                    }
                 }
             }
         }
-
     }
 }

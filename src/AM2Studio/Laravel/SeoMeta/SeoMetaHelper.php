@@ -37,13 +37,25 @@ class SeoMetaHelper
         foreach ($seoMeta as $key => $value) {
             self::$seoMeta[$key] = $value;
         }
+    }
+    
+    public static function setSeoMetaModel($model, $variant = '')
+    {
+        $function = 'getSeo' . ucfirst($variant);
+        
+        $metasGenerator = $model->$function();
+        $metasDatabase  = $model->getSeoMeta($variant);
+        
+        foreach ($metasGenerator as $key => $value) {
+            if($value != ''){
+                self::$seoMeta[$key] = $value;
+            }
+        }
 
-        if($model !== null){
-            $modelMetas = $model->getSeoMeta($variant);
-            foreach ($modelMetas as $key => $value) {
-                if(trim($value) != ''){
-                    self::$seoMeta[$key] = $value;
-                }
+       
+        foreach ($metasDatabase as $key => $value) {
+            if($value != ''){
+                self::$seoMeta[$key] = $value;
             }
         }
     }
