@@ -104,7 +104,7 @@ class SeoMetaHelper
                 $type  = self::$seoMetaTypes[$meta]['type'] == 'string' ? 'text' : 'textarea';
                 $label = ucwords($meta);
                 
-                $formData[$variant][$meta] = ['name' => $name, 'value' => $value, 'type' => $type, 'label' => $label];
+                $formData[$variant][$meta] = ['key' => $key, 'name' => $name, 'value' => $value, 'type' => $type, 'label' => $label];
             }
         }
 
