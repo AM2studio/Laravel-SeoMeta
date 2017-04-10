@@ -78,12 +78,14 @@ class SeoMetaHelper
         foreach ($seoMeta as $key => $value) {
             if (self::$seoMetaTypes[$key]['type'] == 'string') {
                 if ($seoMeta[$key] != '') {
+                    $seoMeta[$key] = trim(preg_replace('!\s+!', ' ', strip_tags($seoMeta[$key])));
                     $string .= sprintf(self::$seoMetaTypes[$key]['template'], $seoMeta[$key])."\n";
                 }
             } else {
                 $seoMeta[$key] = explode("\n", self::$seoMeta[$key]);
                 foreach ($seoMeta[$key] as $row) {
                     if ($row != '') {
+                        $row = trim(preg_replace('!\s+!', ' ', strip_tags($row)));
                         $string .= sprintf(self::$seoMetaTypes[$key]['template'], $row)."\n";
                     }
                 }
