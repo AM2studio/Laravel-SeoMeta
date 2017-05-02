@@ -18,8 +18,8 @@
     ],
     "require": {
         "php" : ">=5.4.0",
-        "laravel/framework": "5.2.*",
-        "wpb/string-blade-compiler": "3.2.2"
+        "laravel/framework": "5.*",
+        "wpb/string-blade-compiler": "3.*"
     },
     "require-dev": {
 
