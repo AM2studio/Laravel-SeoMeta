@@ -12,8 +12,9 @@ class AddSeoMetasTable extends Migration
     {
         Schema::create('seo_metas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('model_type');
-            $table->integer('model_id')->unsigned();
+            $table->string('model_type')->nullable();
+            $table->integer('model_id')->unsigned()->nullable();
+            $table->text('route')->nullable();
             $table->text('key');
             $table->text('value');
 

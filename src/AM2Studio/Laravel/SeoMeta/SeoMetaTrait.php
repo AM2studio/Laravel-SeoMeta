@@ -8,7 +8,7 @@ trait SeoMetaTrait
     
     public function seoMetas()
     {
-        return $this->hasMany(SeoMeta::class, 'model_id')->where(['model_type' => __CLASS__]);
+        return $this->morphMany(SeoMeta::class, 'model')->where('model_id', '<>', '');
     }
 
     public function seoMetaModelUpdated()

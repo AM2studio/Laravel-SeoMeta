@@ -16,20 +16,20 @@ class SeoMetaHelper
         'article:published_time' => ['type' => 'string', 'template' => '<meta property="article:published_time" content="%s" />'],
         'article:section'        => ['type' => 'string', 'template' => '<meta property="article:section" content="%s" />'],
 
-        'og:description'      => ['type' => 'string', 'template' => '<meta property="og:description" content="%s" />'],
-        'og:title'            => ['type' => 'string', 'template' => '<meta property="og:title" content="%s" />'],
-        'og:url'              => ['type' => 'string', 'template' => '<meta property="og:url" content="%s" />'],
-        'og:type'             => ['type' => 'string', 'template' => '<meta property="og:type" content="%s" />'],
-        'og:locale'           => ['type' => 'string', 'template' => '<meta property="og:locale" content="%s" />'],
-        'og:locale:alternate' => ['type' => 'array',  'template' => '<meta property="og:locale:alternate" content="%s" />'],
-        'og:site_name'        => ['type' => 'string', 'template' => '<meta property="og:site_name" content="%s" />'],
-        'og:image'            => ['type' => 'array',  'template' => '<meta property="og:image" content="%s" />'],
-        'og:image:url'        => ['type' => 'array',  'template' => '<meta property="og:image:url" content="%s" />'],
-        'og:image:size'       => ['type' => 'string', 'template' => '<meta property="og:image:size" content="%s" />'],
+        'og:description'         => ['type' => 'string', 'template' => '<meta property="og:description" content="%s" />'],
+        'og:title'               => ['type' => 'string', 'template' => '<meta property="og:title" content="%s" />'],
+        'og:url'                 => ['type' => 'string', 'template' => '<meta property="og:url" content="%s" />'],
+        'og:type'                => ['type' => 'string', 'template' => '<meta property="og:type" content="%s" />'],
+        'og:locale'              => ['type' => 'string', 'template' => '<meta property="og:locale" content="%s" />'],
+        'og:locale:alternate'    => ['type' => 'array',  'template' => '<meta property="og:locale:alternate" content="%s" />'],
+        'og:site_name'           => ['type' => 'string', 'template' => '<meta property="og:site_name" content="%s" />'],
+        'og:image'               => ['type' => 'array',  'template' => '<meta property="og:image" content="%s" />'],
+        'og:image:url'           => ['type' => 'array',  'template' => '<meta property="og:image:url" content="%s" />'],
+        'og:image:size'          => ['type' => 'string', 'template' => '<meta property="og:image:size" content="%s" />'],
 
-        'twitter:card'        => ['type' => 'string', 'template' => '<meta name="twitter:card" content="%s" />'],
-        'twitter:title'       => ['type' => 'string', 'template' => '<meta name="twitter:title" content="%s" />'],
-        'twitter:site'        => ['type' => 'string', 'template' => '<meta name="twitter:site" content="%s" />'],
+        'twitter:card'           => ['type' => 'string', 'template' => '<meta name="twitter:card" content="%s" />'],
+        'twitter:title'          => ['type' => 'string', 'template' => '<meta name="twitter:title" content="%s" />'],
+        'twitter:site'           => ['type' => 'string', 'template' => '<meta name="twitter:site" content="%s" />'],
     ];
 
     public static function setSeoMeta($seoMeta, $model = null, $variant = '')
@@ -69,9 +69,12 @@ class SeoMetaHelper
     {
         $seoMeta = self::$seoMeta;
         foreach ($default as $key => $value) {
-            if (!isset($seoMeta[$key])) {
-                $seoMeta[$key] = $default[$key];
-            }
+            $seoMeta[$key] = $default[$value];
+        }
+
+        $seoMetasRoute = SeoMeta::where(['route' => \Request::route()->getName()])->get();
+        foreach($seoMetasRoute as $seoMetaRoute){
+            $seoMeta[$seoMetaRoute->key] = $seoMetaRoute->value;
         }
 
         $string = '';
