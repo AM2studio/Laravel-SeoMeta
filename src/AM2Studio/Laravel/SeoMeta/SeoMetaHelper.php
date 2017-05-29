@@ -72,9 +72,11 @@ class SeoMetaHelper
             $seoMeta[$key] = $default[$value];
         }
 
-        $seoMetasRoute = SeoMeta::where(['route' => \Request::route()->getName()])->get();
-        foreach($seoMetasRoute as $seoMetaRoute){
-            $seoMeta[$seoMetaRoute->key] = $seoMetaRoute->value;
+        if(\Request::route()){
+            $seoMetasRoute = SeoMeta::where(['route' => \Request::route()->getName()])->get();
+            foreach($seoMetasRoute as $seoMetaRoute){
+                $seoMeta[$seoMetaRoute->key] = $seoMetaRoute->value;
+            }
         }
 
         $string = '';
