@@ -5,7 +5,7 @@ namespace AM2Studio\Laravel\SeoMeta;
 trait SeoMetaTrait
 {
     private $seoMetaFromForm = [];
-    
+
     public function seoMetas()
     {
         return $this->morphMany(SeoMeta::class, 'model')->where('model_id', '<>', '');
@@ -26,12 +26,12 @@ trait SeoMetaTrait
     {
         $seoMetas = [];
         $seoMetasTmp = $this->seoMetas;
-        foreach($seoMetasTmp as $seoMetaTmp){
-            $key     = $seoMetaTmp['key'];
-            $value   = $seoMetaTmp['value'];
+        foreach ($seoMetasTmp as $seoMetaTmp) {
+            $key = $seoMetaTmp['key'];
+            $value = $seoMetaTmp['value'];
             $variant = $seoMetaTmp['variant'];
 
-            if($variantCurrent == $variant){
+            if ($variantCurrent == $variant) {
                 $seoMetas[$key] = $value;
             }
         }
@@ -41,23 +41,23 @@ trait SeoMetaTrait
 
     private function saveSeoMeta()
     {
-        $config          = self::$seoMeta;
-        $configMetas     = $config['metas'];
-        $configVariants  = $config['variants'];
-        
+        $config = self::$seoMeta;
+        $configMetas = $config['metas'];
+        $configVariants = $config['variants'];
+
         foreach ($configVariants as $variant) {
             foreach ($configMetas as $key) {
                 $seoMeta = $this->seoMetas()->where(['key' => $key, 'variant' => $variant])->first();
-                $value   = $this->seoMetaFromForm[$variant][$key];
-                
-                if ( ! $seoMeta) {
-                    if($value != ''){
+                $value = $this->seoMetaFromForm[$variant][$key];
+
+                if (!$seoMeta) {
+                    if ($value != '') {
                         SeoMeta::create(['key' => $key, 'value' => $value, 'variant' => $variant, 'model_id' => $this->id, 'model_type' => __CLASS__]);
                     }
                 } else {
-                    if($value == ''){
+                    if ($value == '') {
                         $seoMeta->delete();
-                    }else{
+                    } else {
                         $seoMeta->update(['value' => $value]);
                     }
                 }
