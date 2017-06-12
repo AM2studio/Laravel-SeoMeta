@@ -101,8 +101,16 @@ class SeoMetaHelper
 
     public static function formData($model)
     {
-        $seoMetas = $model->seoMetas()->lists('value', 'key');
-        
+        $seoMetas = [];
+        $seoMetasTmp = $model->seoMetas;
+        foreach($seoMetasTmp as $seoMetaTmp){
+            $key     = $seoMetaTmp['key'];
+            $value   = $seoMetaTmp['value'];
+            $variant = $seoMetaTmp['variant'];
+
+            $seoMetas[$variant][$key] = $value;
+        }
+
         $config          = $model::$seoMeta;
         $configMetas     = $config['metas'];
         $configVariants  = $config['variants'];
@@ -110,16 +118,30 @@ class SeoMetaHelper
         $formData = [];
         foreach ($configVariants as $variant) {
             foreach ($configMetas as $meta) {
-                $key   = $variant . '.' . $meta;
-                $name  = 'seoMeta[' . $key . ']';
-                $value = empty($seoMetas[$key]) ? '' : $seoMetas[$key];
+                $value = empty($seoMetas[$variant][$meta]) ? '' : $seoMetas[$variant][$meta];
                 $type  = self::$seoMetaTypes[$meta]['type'] == 'string' ? 'text' : 'textarea';
                 $label = ucwords($meta);
                 
-                $formData[$variant][$meta] = ['key' => $key, 'name' => $name, 'value' => $value, 'type' => $type, 'label' => $label];
+                $formData[$variant][$meta] = ['value' => $value, 'type' => $type, 'label' => $label];
             }
         }
 
         return $formData;
+    }
+
+    public static function getDefaultValues($model)
+    {
+        $config   = $model::$seoMeta;
+        $defaults = [];
+
+        foreach($config['variants'] as $variant){
+            $function = 'getSeo' . ucfirst($variant);
+            $values = $model->$function();
+            foreach($values as $key => $value){
+                $defaults[$variant][$key] = $value;
+            }
+        }
+
+        return $defaults;
     }
 }

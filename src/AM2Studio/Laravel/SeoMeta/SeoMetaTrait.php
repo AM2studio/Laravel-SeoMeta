@@ -22,20 +22,21 @@ trait SeoMetaTrait
         unset($this->seoMeta);
     }
 
-    public function getSeoMeta($variant)
+    public function getSeoMeta($variantCurrent)
     {
-        $showSeoMetas = [];
-        $config       = self::$seoMeta;
-        $configMetas     = $config['metas'];
-        $seoMetas = $this->seoMetas->lists('value', 'key')->toArray();
-        foreach ($configMetas as $meta) {
-            $key = $variant . '.' . $meta;
-            if (isset($seoMetas[$key])) {
-                $showSeoMetas[$meta] = $seoMetas[$key];
+        $seoMetas = [];
+        $seoMetasTmp = $this->seoMetas;
+        foreach($seoMetasTmp as $seoMetaTmp){
+            $key     = $seoMetaTmp['key'];
+            $value   = $seoMetaTmp['value'];
+            $variant = $seoMetaTmp['variant'];
+
+            if($variantCurrent == $variant){
+                $seoMetas[$key] = $value;
             }
         }
 
-        return $showSeoMetas;
+        return $seoMetas;
     }
 
     private function saveSeoMeta()
@@ -45,21 +46,19 @@ trait SeoMetaTrait
         $configVariants  = $config['variants'];
         
         foreach ($configVariants as $variant) {
-            foreach ($configMetas as $meta) {
-                $key     = $variant . '.' . $meta;
-                $seoMeta = $this->seoMetas()->where(['key' => $key])->first();
-                $content = $this->seoMetaFromForm[$key];
+            foreach ($configMetas as $key) {
+                $seoMeta = $this->seoMetas()->where(['key' => $key, 'variant' => $variant])->first();
+                $value   = $this->seoMetaFromForm[$variant][$key];
                 
                 if ( ! $seoMeta) {
-                    if($content == ''){
-                        continue;
+                    if($value != ''){
+                        SeoMeta::create(['key' => $key, 'value' => $value, 'variant' => $variant, 'model_id' => $this->id, 'model_type' => __CLASS__]);
                     }
-                    SeoMeta::create(['model_id' => $this->id, 'model_type' => __CLASS__, 'key' => $key, 'value' => $content]);
                 } else {
-                    if($content == ''){
+                    if($value == ''){
                         $seoMeta->delete();
                     }else{
-                        $seoMeta->update(['value' => $content]);
+                        $seoMeta->update(['value' => $value]);
                     }
                 }
             }

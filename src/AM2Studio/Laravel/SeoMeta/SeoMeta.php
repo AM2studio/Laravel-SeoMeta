@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SeoMeta extends Model
 {
-    protected $fillable = ['model_id', 'model_type', 'key', 'value', 'route'];
+    protected $fillable = ['model_id', 'model_type', 'key', 'value', 'route', 'variant'];
 
     public function model()
     {
