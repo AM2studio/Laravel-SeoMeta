@@ -36,12 +36,6 @@ class SeoMetaServiceProvider extends ServiceProvider
      */
     public function registerEvents()
     {
-        $this->app['events']->listen('eloquent.created*', function ($model) {
-            if ($model instanceof SeoMetaInterface) {
-                $model->seoMetaModelCreated();
-            }
-        });
-
         $this->app['events']->listen('eloquent.updating*', function ($model) {
             if ($model instanceof SeoMetaInterface) {
                 $model->seoMetaModelUpdating();
