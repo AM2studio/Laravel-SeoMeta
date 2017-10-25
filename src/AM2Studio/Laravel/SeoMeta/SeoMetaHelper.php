@@ -51,12 +51,12 @@ class SeoMetaHelper
         }
 
         foreach ($metasDatabase as $key => $value) {
-            if ($value != '') {
+            if ($value) {
                 $config = $model::$seoMeta;
                 foreach ($config['variables'] as $variable) {
                     $value = str_replace($variable[1], $variable[2], $value);
                 }
-                $value = view(['template' => $value], ['model' => $model]);
+                //$value = view(['template' => $value], ['model' => $model]);
 
                 self::$seoMeta[$key] = $value;
             }
