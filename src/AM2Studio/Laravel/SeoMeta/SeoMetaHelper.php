@@ -13,6 +13,7 @@ class SeoMetaHelper
         'canonical' => ['type' => 'string', 'template' => '<link rel="canonical" href="%s" />'],
         'article:published_time' => ['type' => 'string', 'template' => '<meta property="article:published_time" content="%s" />'],
         'article:section' => ['type' => 'string', 'template' => '<meta property="article:section" content="%s" />'],
+        'robots' => ['type' => 'string', 'template' => '<meta name="robots" content="%s">'],
 
         'og:description' => ['type' => 'string', 'template' => '<meta property="og:description" content="%s" />'],
         'og:title' => ['type' => 'string', 'template' => '<meta property="og:title" content="%s" />'],
