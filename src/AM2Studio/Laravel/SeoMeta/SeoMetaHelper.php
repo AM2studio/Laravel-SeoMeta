@@ -8,7 +8,7 @@ class SeoMetaHelper
 
     public static $seoMetaTypes = [
         'title' => ['type' => 'string', 'template' => '<title>%s</title>'],
-        'description' => ['type' => 'string', 'template' => '<meta name="description" itemprop="description" content="%s" />'],
+        'description' => ['type' => 'string', 'template' => '<meta name="description" content="%s" />'],
         'keywords' => ['type' => 'string', 'template' => '<meta name="keywords" content="%s" />'],
         'canonical' => ['type' => 'string', 'template' => '<link rel="canonical" href="%s" />'],
         'article:published_time' => ['type' => 'string', 'template' => '<meta property="article:published_time" content="%s" />'],
